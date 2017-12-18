@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.satofromjapan.coderswag.Model.Category
 import com.satofromjapan.coderswag.R
+import org.w3c.dom.Text
 
 /**
  * Created by SATO on 12/18/17.
@@ -20,19 +21,25 @@ class CategoryAdapater(context: Context, categories: List<Category>) : BaseAdapt
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val categoryView: View
+        val holder : ViewHolder
 
-        categoryView = LayoutInflater.from(context).inflate(R.layout.category_list_item, null)
-        val categoryImage : ImageView = categoryView.findViewById(R.id.categoryImage)
-        val categoryName : TextView = categoryView.findViewById(R.id.categoryName)
-        println("Heavy Computing")
+        if (convertView == null){
+            categoryView = LayoutInflater.from(context).inflate(R.layout.category_list_item, null)
+            holder = ViewHolder()
+            holder.categoryImage = categoryView.findViewById(R.id.categoryImage)
+            holder.categoryName = categoryView.findViewById(R.id.categoryName)
+
+            categoryView.tag = holder
+        } else {
+            holder = convertView.tag as ViewHolder
+            categoryView = convertView
+        }
 
         val category = categories[position]
 
         val resourceId = context.resources.getIdentifier(category.image, "drawable", context.packageName)
-        categoryImage.setImageResource(resourceId)
-        println(resourceId)
-
-        categoryName.text = category.title
+        holder.categoryImage?.setImageResource(resourceId)
+        holder.categoryName?.text = category.title
         return categoryView
     }
 
@@ -46,6 +53,11 @@ class CategoryAdapater(context: Context, categories: List<Category>) : BaseAdapt
 
     override fun getCount(): Int {
         return categories.count()
+    }
+
+    private class ViewHolder {
+        var categoryImage: ImageView? = null
+        var categoryName: TextView? = null
     }
 
 
