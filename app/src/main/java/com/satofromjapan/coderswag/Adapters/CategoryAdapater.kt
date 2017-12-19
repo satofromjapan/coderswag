@@ -14,10 +14,7 @@ import org.w3c.dom.Text
 /**
  * Created by SATO on 12/18/17.
  */
-class CategoryAdapater(context: Context, categories: List<Category>) : BaseAdapter() {
-
-    val context = context
-    val categories = categories
+class CategoryAdapater(val context: Context, val categories: List<Category>) : BaseAdapter() {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val categoryView: View

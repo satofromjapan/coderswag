@@ -2,8 +2,10 @@ package com.satofromjapan.coderswag.Controller
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.widget.ArrayAdapter
 import com.satofromjapan.coderswag.Adapters.CategoryAdapater
+import com.satofromjapan.coderswag.Adapters.CategoryRecyclerAdapter
 import com.satofromjapan.coderswag.Model.Category
 import com.satofromjapan.coderswag.R
 import com.satofromjapan.coderswag.Services.DataService
@@ -11,14 +13,18 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var adapter : CategoryAdapater
+    lateinit var adapter : CategoryRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        adapter = CategoryAdapater(this, DataService.categories)
-
+        adapter = CategoryRecyclerAdapter(this, DataService.categories)
         categoryListView.adapter = adapter
+
+        val layoutManager = LinearLayoutManager(this)
+        categoryListView.layoutManager = layoutManager
+        categoryListView.setHasFixedSize(true)
+
     }
 }
